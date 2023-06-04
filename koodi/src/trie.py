@@ -1,26 +1,47 @@
 class TrieNode:  # puun solmu
     def __init__(self):
-        self.children = {}  # solmun jälkeläiset
-        self.weights = {}  # jälkeläisten painoarvo
+        self.children = [None for _ in range(25)]  # solmun jälkeläiset
+        self.weight = 0  # solmun oma painoarvo TODO
 
 
 class Trie:
-    def __init__(self):
+    # Alustetaan puu juurisolmulla. Oksista tulee halutun Markovin kejun pituiset.
+    def __init__(self, degree):
         self.root = TrieNode()
+        self.degree = degree
 
-    def __str__(self, root):  # tämä ei toimi vielä
-        root = self.root
+    def insert(self, tune):
+        for i in range(len(tune)):
+            node = self.root
+            # syötetään oppimisdata pätkittäin
+            subtune = tune[i:i+self.degree+1]
+            # print("inserting subtune ", subtune)
+            for note in subtune:
+                if node.children[note] is None:
+                    # uusista arvoista muodostuu uudet solmut
+                    node.children[note] = TrieNode()
+                # osasyötteen seuraavasta arvosta tulee edellisen jälkeläinen
+                node = node.children[note]
+                node.weight += 1  # TODO
+
+    def get(self, key):
+        if len(key) > self.degree:
+            raise ValueError(
+                f"Key must be shorter than degree. Current degree is {self.degree}.")  # polku ei voi olla pidempi kuin puun oksat
+
         children = []
-        for note, child in root.children.items():
-            children.append(child)
-        return str(root) + str(children)
-
-    def insert(self, tune):  # haetaan testidatasta perättäiset alkiot ja asetetaan ne puuhun
+        c_weights = []
         node = self.root
-        for note in tune:
-            if note not in node.children:
-                node.children[note] = TrieNode()
-                node.weights[note] = 1
-            else:
-                node.weights[note] += 1
-            node = node.children[note]
+        for i in key:
+            node = node.children[i]
+            if node is None:
+                return children  # Olematon polku palauttaa tyhjän listan.
+        for j in range(25):
+            if node.children[j] is not None:  # Haetaan kaikki solmun jälkeläiset
+                children.append(j)
+                c_weights.append(node.children[j].weight)
+
+        return children, c_weights
+
+    def get_weights(self, node: TrieNode):
+        pass
