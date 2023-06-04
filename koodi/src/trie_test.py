@@ -37,12 +37,13 @@ class TestTrie(unittest.TestCase):
         result = self.t.get([1])
         self.assertEqual(result[1], [1, 3, 1, 1, 1, 1])
 
-    # testi toimii, pitää vain formatoida asettelu oikein.
     def test_path_too_long(self):
-        self.t.get([1, 2, 3])
+        with self.assertRaises(ValueError) as context:
+            self.t.get([1, 2, 3])
 
-        self.assertRaises(ValueError(
-            f"Key must be shorter than degree. Current degree is {self.degree}."))
+        self.assertEqual(
+            str(context.exception),
+            "Key must be shorter than degree. Current degree is 1.")
 
 
 if __name__ == '__main__':
