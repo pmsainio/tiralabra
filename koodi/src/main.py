@@ -1,31 +1,20 @@
 from trie import Trie
+import midi_parser as mp
 
-"""toistaiseksi tässä tiedostossa vain testaillaan toiminnallisuuksia"""
+"""Ohjelmalla ei toistaiseksi ole omaa käyttöliittymää, vaan koodia mukautetaan omiin tarpeisiin sopivaksi."""
 
-puu = Trie(3)
+trie = Trie(3)
 
-tune = [1, 2, 1, 3, 1, 4]
-puu.insert(tune)
-result = puu.get([1])
-print(result)  # Output: [2, 3, 4]
+# Training data -kansioon on laitettu opetusdataa, jonka ohjelma paikantaa tiedoston nimen perusteella. Lisää omasi, jos haluat.
+training_data = [mp.extract_pitches("Lemmennosto.mid"),
+                 mp.extract_pitches("Matalii ja mustii.mid"),
+                 mp.extract_pitches("Pihi neito.mid"),
+                 mp.extract_pitches("Riena.mid"),
+                 mp.extract_pitches("Ruhverikko.mid"),
+                 mp.extract_pitches("Tantsu.mid")]
 
-result = puu.get([1, 2])
-print(result)  # 1
-result = puu.get([2, 3])
-print(result)  # []
+for tune in training_data:
+    trie.insert(tune)
 
-print("\n")
-
-puu = Trie(1)
-tune = [1, 2, 1, 3, 1, 4]
-tune_2 = [1, 3, 1, 5, 1, 6, 1, 7]
-tune_3 = [1, 3]
-puu.insert(tune)
-puu.insert(tune_2)
-puu.insert(tune_3)
-
-result = puu.get([1])
-print(result)  # Output: [2, 3, 4, 5, 6, 7]
-print("\n")
-result = puu.get([1, 2])
-print(result)  # Output: Error
+# Tämä komento kertoo jokaisen käytetyn nuotin ja sen yleisyyden.
+print(trie.get([]))
