@@ -4,7 +4,8 @@ import random
 
 """Ohjelmalla ei toistaiseksi ole omaa käyttöliittymää, vaan koodia mukautetaan omiin tarpeisiin sopivaksi."""
 
-n = 5  # Halutun Markovin ketjun aste
+# Haluttu Markovin ketjun aste, n = 6:sta alkaen algoritmi ei tuota juurikaan uusia sävelmiä.
+n = 4
 l = 20  # Halutun sävelmän pituus
 trie = Trie(n)
 
@@ -31,11 +32,12 @@ i = 0
 key = []
 while len(new_tune) != l:
     for j in range(n):
-        print("key= ", new_tune[-n:])
         note = random.choices(
             trie.get(new_tune[-n:])[0], trie.get(new_tune[-n:])[1], k=1)[0]
         new_tune.append(note)
         if j == n-1 or len(new_tune) == l:
             break
 
-print(new_tune)
+print("uusi sävelmä: ", new_tune)
+
+mp.write_midi_file("Markovin melodia #n", new_tune)
