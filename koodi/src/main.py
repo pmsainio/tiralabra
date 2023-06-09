@@ -1,11 +1,17 @@
 from trie import Trie
 import midi_parser as mp
+import random
 
 """Ohjelmalla ei toistaiseksi ole omaa käyttöliittymää, vaan koodia mukautetaan omiin tarpeisiin sopivaksi."""
 
-trie = Trie(3)
+n = 5  # Halutun Markovin ketjun aste
+l = 20  # Halutun sävelmän pituus
+trie = Trie(n)
 
-# Training data -kansioon on laitettu opetusdataa, jonka ohjelma paikantaa tiedoston nimen perusteella. Lisää omasi, jos haluat.
+# Training data / midi -kansioon on laitettu opetusdataa, jonka ohjelma paikantaa tiedoston nimen perusteella.
+# Tiedostot on normalisoitu siten, että niiden sävellaji on C tai a, ja ääniala on g--g^2 (tai g3--g5).
+# Ainakin fuksiläppäri osaa avata .mid-tiedostot sellaisenaan, mikäli kappaleita haluaa kuunnella ensin itse.
+
 training_data = [mp.extract_pitches("Lemmennosto.mid"),
                  mp.extract_pitches("Matalii ja mustii.mid"),
                  mp.extract_pitches("Pihi neito.mid"),
@@ -16,5 +22,20 @@ training_data = [mp.extract_pitches("Lemmennosto.mid"),
 for tune in training_data:
     trie.insert(tune)
 
-# Tämä komento kertoo jokaisen käytetyn nuotin ja sen yleisyyden.
-print(trie.get([]))
+print("\n Yleiskatsaus syötedatasta:\n",
+      trie.get([])[0], "\n", trie.get([])[1], "\n")
+
+
+new_tune = []
+i = 0
+key = []
+while len(new_tune) != l:
+    for j in range(n):
+        print("key= ", new_tune[-n:])
+        note = random.choices(
+            trie.get(new_tune[-n:])[0], trie.get(new_tune[-n:])[1], k=1)[0]
+        new_tune.append(note)
+        if j == n-1 or len(new_tune) == l:
+            break
+
+print(new_tune)
