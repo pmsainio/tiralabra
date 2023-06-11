@@ -26,7 +26,7 @@ for tune in training_data:
 print("\n Yleiskatsaus syötedatasta:\n",
       trie.get([])[0], "\n", trie.get([])[1], "\n")
 
-
+# Luodaan uusi sävelmä nuotti kerrallaan. Silmukassa seurataan aina yhtä puun oksista, ja otetaan huomioon n edellistä sävelmään tullutta nuottia.
 new_tune = []
 i = 0
 key = []
