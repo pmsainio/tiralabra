@@ -1,3 +1,8 @@
+# Trie-tietorakenteessa syötedata tallennetaan merkki / alkio kerrallaan puuhun siten,
+# että seuraava alkio on aina edellisen lapsi. Itse lapsisolmu ei saa mitään arvoa, vaan
+# sen indeksi kertoo meille tarvittavan tiedon. Eri syötteet tallentuvat siis eri poluiksi
+# juurisolmusta lähtien.
+
 class TrieNode:  # puun solmu
     def __init__(self):
         self.children = [None for _ in range(25)]  # solmun jälkeläiset
@@ -11,7 +16,7 @@ class Trie:
         self.degree = degree
 
     def insert(self, tune):
-        # Syötetään oppimisdata pätkittäin puuhun. Solmun indeksi kertoo sen numeroarvon.
+        # Syötetään oppimisdata pätkittäin puuhun. Joka alkiosta lähtien tallennetaan uusi pätkä.
         for i in range(len(tune)):
             node = self.root
             subtune = tune[i:i+self.degree+1]
@@ -19,7 +24,7 @@ class Trie:
                 if node.children[note] is None:
                     node.children[note] = TrieNode()
                 node = node.children[note]
-                node.weight += 1  # TODO
+                node.weight += 1
 
     def get(self, key):
         # Haetaan annetun polun päästä löytyvien solmujen indeksit ja niiden painot.
@@ -33,6 +38,7 @@ class Trie:
         for i in key:
             node = node.children[i]
             if node is None:
+                print("The tree ran into a dead end. No worries.")
                 return children, c_weights
         for j in range(25):
             if node.children[j] is not None:

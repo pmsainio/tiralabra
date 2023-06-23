@@ -6,7 +6,7 @@ import random
 
 # Haluttu Markovin ketjun aste, n = 6:sta alkaen algoritmi ei tuota juurikaan uusia sävelmiä.
 n = 4
-l = 20  # Halutun sävelmän pituus
+l = 20  # Haluttu sävelmän pituus
 trie = Trie(n)
 
 # Training data / midi -kansioon on laitettu opetusdataa, jonka ohjelma paikantaa tiedoston nimen perusteella.
@@ -16,15 +16,15 @@ trie = Trie(n)
 training_data = [mp.extract_pitches("Lemmennosto.mid"),
                  mp.extract_pitches("Matalii ja mustii.mid"),
                  mp.extract_pitches("Pihi neito.mid"),
-                 mp.extract_pitches("Riena.mid"),
+                 # mp.extract_pitches("Riena.mid"),
                  mp.extract_pitches("Ruhverikko.mid"),
                  mp.extract_pitches("Tantsu.mid")]
 
 for tune in training_data:
     trie.insert(tune)
 
-print("\n Yleiskatsaus syötedatasta:\n",
-      trie.get([])[0], "\n", trie.get([])[1], "\n")
+print("\n Yleiskatsaus syötedatasta:\n sävelet:",
+      trie.get([])[0], "\n painot:", trie.get([])[1], "\n")
 
 # Luodaan uusi sävelmä nuotti kerrallaan. Silmukassa seurataan aina yhtä puun oksista, ja otetaan huomioon n edellistä sävelmään tullutta nuottia.
 new_tune = []
@@ -32,8 +32,9 @@ i = 0
 key = []
 while len(new_tune) != l:
     for j in range(n):
+        key = trie.get(new_tune[-n:])
         note = random.choices(
-            trie.get(new_tune[-n:])[0], trie.get(new_tune[-n:])[1], k=1)[0]
+            key[0], key[1], k=1)[0]
         new_tune.append(note)
         if j == n-1 or len(new_tune) == l:
             break
