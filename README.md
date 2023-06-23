@@ -2,6 +2,13 @@
 Tavoitteena on Markovin ketjuja hyödyntämällä generoida lyhyitä sävelmiä. Syötteenä on tarkoitus toimia joukko MIDI-tiedostoja, jotka luetaan erillisestä kansiosta, ja joita analysoimalla ohjelma pystyisi replikoimaan tyylinmukaisia uusia sävelmiä. Toteutettavassa algoritmissa on pyrkimyksenä voida käyttää mielivaltaisen pituisia ketjuja. Ohjelma hyödyntää trie-tietorakennetta, koska se säästää tallennustilaa. Aikavaativuuden suhteen ei ole sen kummempia tehostamistavoitteita.
 
 ### Käyttöohje
+
+Ennen ohjelman käyttöönottoa, varmista, että mido-kirjasto toimii esimkerkiksi asentamalla Poetryn riippuvuudet. Suorita alla mainittu komento koodi-kansiossa:
+
+```bash
+poetry install
+```
+
 Ohjelmalla ei toistaiseksi ole erillistä käyttöliittymää, vaan käyttäjän tai tilanteen vaatimiin tarpeisiin mukauttaminen tehdään vaihtamalla muuttujien lähtöarvoja ja syötettävää opetusdataa.
 
 Olennaisimmat muuttujat:
