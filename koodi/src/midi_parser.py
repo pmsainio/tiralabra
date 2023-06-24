@@ -3,8 +3,12 @@ from os import path
 
 
 def extract_pitches(filename):
-    midi = mido.MidiFile(path.dirname(__file__) +
-                         "/training data/midi/" + filename)
+    try:
+        midi = mido.MidiFile(path.dirname(__file__) +
+                             "/training data/midi/" + filename)
+    except FileNotFoundError:
+        print("Tiedostoa ei löytynyt: ", filename)
+        midi = ""
     pitches = []
 
     for message in midi:

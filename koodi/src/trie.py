@@ -38,7 +38,6 @@ class Trie:
         for i in key:
             node = node.children[i]
             if node is None:
-                print("The tree ran into a dead end. No worries.")
                 return children, c_weights
         for j in range(25):
             if node.children[j] is not None:
