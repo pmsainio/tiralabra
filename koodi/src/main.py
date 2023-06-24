@@ -1,6 +1,7 @@
 from trie import Trie
 import midi_parser as mp
 import random
+import datetime
 
 """Ohjelmalla ei toistaiseksi ole omaa käyttöliittymää, vaan koodia mukautetaan omiin tarpeisiin sopivaksi."""
 
@@ -49,4 +50,4 @@ while len(new_tune) != l:
 
 print("uusi sävelmä: ", new_tune)
 
-mp.write_midi_file("Markovin melodia #n", new_tune)
+mp.write_midi_file(f"Markovin melodia {datetime.datetime.now()}", new_tune)
