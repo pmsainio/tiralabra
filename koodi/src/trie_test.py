@@ -45,6 +45,10 @@ class TestTrie(unittest.TestCase):
             str(context.exception),
             "Key must be shorter than degree. Current degree is 1.")
 
+    def test_getter(self):
+        self.t.insert(self.tune_1)
+        self.assertEqual(self.t.get([]), ([1, 2, 3, 4], [3, 1, 1, 1]))
+
 
 if __name__ == '__main__':
     unittest.main()
