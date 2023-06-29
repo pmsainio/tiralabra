@@ -17,7 +17,7 @@ def extract_pitches(filename):
     return pitches
 
 
-def write_midi_file(filename, notes, tempo=500000):
+def write_midi_file(filename, notes, tempo=250000):
     mid = mido.MidiFile()
     track = mido.MidiTrack()
     mid.tracks.append(track)
