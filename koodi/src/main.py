@@ -1,13 +1,14 @@
 from trie import Trie
 import midi_parser as mp
+from markov import markov
 import random
-import datetime
+from datetime import datetime
 
 """Ohjelmalla ei toistaiseksi ole omaa käyttöliittymää, vaan koodia mukautetaan omiin tarpeisiin sopivaksi."""
 
 # Haluttu Markovin ketjun aste, n = 6:sta alkaen algoritmi ei tuota juurikaan uusia sävelmiä.
-n = 5
-l = 20  # Haluttu sävelmän pituus
+n = 3
+l = 40  # Haluttu sävelmän pituus
 trie = Trie(n)
 
 # Training data / midi -kansioon on laitettu opetusdataa, jonka ohjelma paikantaa tiedoston nimen perusteella.
@@ -28,26 +29,11 @@ print("\n Yleiskatsaus syötedatasta:\n sävelet:",
       trie.get([])[0], "\n painot:", trie.get([])[1], "\n")
 
 # Luodaan uusi sävelmä nuotti kerrallaan. Silmukassa seurataan aina yhtä puun oksista, ja otetaan huomioon n edellistä sävelmään tullutta nuottia.
-new_tune = []
-key_empty = False
 
-while len(new_tune) != l:
-    for j in range(n):
-        key = trie.get(new_tune[-n:])
-        if key != ([], []):
-            note = random.choices(
-                key[0], key[1], k=1)[0]
-            new_tune.append(note)
-        else:
-            key_empty = True
-            print(
-                "Algoritmi ajautui umpikujaan, joten sävelmä jäi vajaamittaiseksi. Ei hätää.")
-            break
-        if j == n-1 or len(new_tune) == l:
-            break
-    if key_empty:
-        break
+new_tune = markov(trie, n, l)
 
 print("uusi sävelmä: ", new_tune)
 
-mp.write_midi_file(f"Markovin melodia {datetime.datetime.now()}", new_tune)
+timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+mp.write_midi_file(f"Markovin melodia {timestamp}", new_tune)
