@@ -1,4 +1,4 @@
 .coverage
 koodi/.coverage
 koodi/src/new_tunes
-
+koodi/src/__pycache__/
