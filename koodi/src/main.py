@@ -1,7 +1,6 @@
 from trie import Trie
 import midi_parser as mp
 from markov import markov
-import random
 from datetime import datetime
 
 """Ohjelmalla ei toistaiseksi ole omaa käyttöliittymää, vaan koodia mukautetaan omiin tarpeisiin sopivaksi."""

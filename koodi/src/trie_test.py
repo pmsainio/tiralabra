@@ -47,8 +47,7 @@ class TestTrie(unittest.TestCase):
 
     def test_getter(self):
         self.t.insert(self.tune_1)
-        root = self.t.get([])
-        self.assertEqual(root, ([1, 2, 3, 4], [3, 1, 1, 1]))
+        self.assertEqual(self.t.get([]), ([1, 2, 3, 4], [3, 1, 1, 1]))
 
 
 if __name__ == '__main__':
