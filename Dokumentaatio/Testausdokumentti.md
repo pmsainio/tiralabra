@@ -17,6 +17,7 @@ coverage html
 ### Yksikkötesteistä
 
 Trie-tietorakenteen testaaminen yksikkötestein oli mutkatonta. Rakenne ei vaadi muuta kuin setterin ja getterin, ja näiden ollessa kunnossa pystyi testaamaan myös virhetilanteita ja solmujen painojen kasvua. Syystä, jota en osaa selittää, getterin testi ei raportin mukaan kata getterin toimintaa, mikä hämmentää minua. Joka tapauksessa manuaalisten testausten myötä olen kuitenkin satavarma, että getteri toimii halutulla tavalla.
+![testikattavuusraportti](https://github.com/pmsainio/tiralabra/blob/main/Dokumentaatio/Coverage%202023-07-02%2019-16-16.png)
 
 ### Manuaalisesta testauksesta
 
