@@ -1,5 +1,4 @@
 .coverage
 koodi/.coverage
-koodi/poetry.lock
-koodi/new_tunes
+koodi/src/new_tunes
 
