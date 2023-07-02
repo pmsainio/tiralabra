@@ -1,23 +1,31 @@
 # Testausdokumentti
 
-ohjelman yksikkötestit on mahdollista suorittaa Poetryn avulla. Ensin on asennettava Poetry.
+ohjelman yksikkötestit on mahdollista suorittaa Poetryn avulla. Ensin on asennettava Poetry kansion *koodi* sisällä
+.
 ```bash
 poetry install
 ```
 Testien suoritus onnistuu ajamalla seuraava komento koodi-kansiossa virtuaaliympäristössä
 ```bash
-coverage run --branch -m pytest src
+pytest
 ```
 Testikattavuusraportin saa luotua komennolla
 ```bash
 coverage html
 ```
 
+### Yksikkötesteistä
 
-#### 4.6.
+Trie-tietorakenteen testaaminen yksikkötestein oli mutkatonta. Rakenne ei vaadi muuta kuin setterin ja getterin, ja näiden ollessa kunnossa pystyi testaamaan myös virhetilanteita ja solmujen painojen kasvua. Syystä, jota en osaa selittää, getterin testi ei raportin mukaan kata getterin toimintaa, mikä hämmentää minua. Joka tapauksessa manuaalisten testausten myötä olen kuitenkin satavarma, että getteri toimii halutulla tavalla.
 
-Yksikkötestit on aloitettu. Trien setteri ja getteri toimivat kuten haluan. Toistaiseksi suurin osa testaamisesta on tapahtunut manuaalisesti, minkä jälkeen olen tehnyt tätä vastaavan yksikkötestin. Kattavuusraportti näyttää tällä hetkellä hirveältä, joten yritän tehdä sille jotain. Testaamatta on vielä ainakin vääränlaiset syötteet. Kunhan saan oikeanmuotoista opetusdataa, voisin yrittää testata tilanteita, joissa tietynlainen syöte pakottaa tietynlaiseen lopputulokseen. Lopullinen sovellus tulee hyödyntämään satunnaisuutta. Sen testaaminen tulee olemaan vaikeaa.
+### Manuaalisesta testauksesta
 
-#### 24.6.
+Markovin ketjun generoinnissa hyödynnettiin satunnaisuutta, joten yksikkötestejä oli mahdotonta alkaa rakentamaan. Heti juurisolmusta alkaen tehty arpominen johtaa väistämättä siihen, että mikäli juuresta lähtee edes kaksi oksaa, voi lopputulos vaihdella. Markovin ketjun toimintaa on siis tarkasteltu mm. välitulostusten avulla. Esimerkiksi, jos halutaan luoda kolmannen asteen ketjua, ja sävelmän viimeiset kolme säveltä ovat [3, 3, 2], on mahdollista varmistaa, että funktion käyttämä avain on [3, 3, 2]. Mikäli haku puusta avaimella [3, 3, 2] antaa lapset [1, 2, 3], on mahdollista varmistaa, että uuteen sävelmään seuraavaksi valittu sävel on joku näistä.
 
-Testikattavuutta on laajennettu hieman. Tällä hetkellä testin kohteena on myös virhetilanteita, joita ei pitäisi sattua ohjelman normaalikäytössä, mutta minusta niiden on hyvä olla olemassa siltä varalta, että koodi muuttuu. Jotkut ongelmat, kuten puun päätyminen umpikujaan, ovat vaikeita testata yksikkötesteillä, sillä ne esiintyvät sattumanvaraisesti.
+Lisäksi koodissa on mahdollista törmätä virhetilanteeseen, jossa hakuavain vie jollekin puun lehdistä, eikä hakureitin päässä olevalla solmulla näin ollen ole enää jälkeläisiä. Näin voi käydä esimerkiksi, kun syötetyn opetusdatan loppuosa ja avain täsmäävät. Tällaisia virhetilanteita varten tehtyjä ilmoituksia on testattu ajamalla koodia, kunnes virhetilanne tulee uudestaan vastaan.
+
+### Testaus koodin ulkopuolella
+
+Jonkin verran varmistusta ohjelman toiminnan oikeellisuudesta olen tehnyt myös korvakuulolta. Esimerkiksi asettaessa ketjun asteeksi riittävän korkean luvun (kuten 7) olen voinut todeta, että ohjelma toisintaa yksi yhteen jotakin tiettyä opetustadana annettua sävelmää. Pienemmällä asteluvulla puolestaan on voinut huomata generoidun sävelmän olevan satunnaisempi, vaikka syötteenä olisi ollut vain yksi opetusdatana annettavista sävelmistä.
+
+Opetusdatan ja kirjoitettujen tiedostojen vertailun yhteydessä olen myös voinut todeta midi-toiminnallisuuksien eli tiedostojen lukemisen ja kirjoittamisen toimivan virheettömästi.
